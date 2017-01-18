@@ -1,7 +1,7 @@
 # Whole-genome-Bisulfite-Sequencing
 A Whole-genome Bisulfite Sequencing(WGBS) pipline
 # Below is the content of the pipeline:
-+++++++++++++++++++++++++++++++++++++++++++++++++
+
 1. Fiter(quality control)
   1.1 trim adpter
   1.2 bsae quality check
@@ -12,6 +12,7 @@ A Whole-genome Bisulfite Sequencing(WGBS) pipline
 4. extractor
   by using extractor moudle of bismark
   ###note: time consuming
-URL:http://www.bioinformatics.bbsrc.ac.uk/projects/bismark/
+  
+URL: http://www.bioinformatics.bbsrc.ac.uk/projects/bismark/
   
 
