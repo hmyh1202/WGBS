@@ -6,12 +6,15 @@ A Whole-genome Bisulfite Sequencing(WGBS) pipline
 1.2 bsae quality check
 # 2.mapping(bismark)
 by using bismark moudle of bismark
-# 3. dedeuplication
+# 3. deduplication
 by using deduplication moudle of bismark
 # 4. extractor
 by using extractor moudle of bismark
 ###note: time consuming
-  
-URL: http://www.bioinformatics.bbsrc.ac.uk/projects/bismark/
-  
+# 5. DMR
+by using methylKit or BSseq or et al.,
+# 6. DMG
+dmr-related genes
 
+# URL:
+http://www.bioinformatics.bbsrc.ac.uk/projects/bismark/
