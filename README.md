@@ -5,7 +5,7 @@ A Whole-genome Bisulfite Sequencing(WGBS) pipline
 1.1 trim adpter
 
 1.2 bsae quality check
-# 2.mapping(bismark)
+# 2.mapping
 by using bismark moudle of bismark
 # 3. deduplication
 by using deduplication moudle of bismark
