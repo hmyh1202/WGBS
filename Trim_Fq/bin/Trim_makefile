@@ -1,0 +1,12 @@
+#Description: trim fastq files by using Trimmomatic-0.36
+#Date: 2017/02/05
+Bin=$(dir $(abspath $(firstword $(MAKEFILE_LIST))))/
+include $(Bin)/software.txt
+Dir=$(indir)
+Trim_dir=$(Dir)/Clean_Data
+Fq1=$(Dir)/$(Sample)_P_R1.fq.gz
+Fq2=$(Dir)/$(Sample)_P_R2.fq.gz
+
+Trim_Fq:
+	[ -s $(Trim_dir) ] && echo Trim_dir already exists|| mkdir $(Trim_dir)
+	java -jar $(Trimmomatic) PE -threads 4 -phred$(Fq_type) -trimlog $(Trim_dir)/$(Sample)_trimlog.txt $(Fq1) $(Fq2) $(Trim_dir)/$(Sample)_P_fiter_R1.fq.gz $(Trim_dir)/$(Sample)_P_R1.unpaired.gz $(Trim_dir)/$(Sample)_P_fiter_R2.fq.gz $(Trim_dir)/$(Sample)_P_R2.unpaired.gz ILLUMINACLIP:$(Adapters):2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36

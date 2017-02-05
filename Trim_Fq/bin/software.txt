@@ -1,0 +1,2 @@
+# software list
+Trimmomatic=../software/trimmomatic-0.36.jar

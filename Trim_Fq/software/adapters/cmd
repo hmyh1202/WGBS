@@ -1,0 +1,1 @@
+TruSeq3-PE.fa与TruSeq3-SE.fa为illumina hiseq和miseq的接头，如果不是使用hiseq2000的，到illumina官网下载接头序列并放到这个文件夹中。TruSeq2对应着illumina GAII测序
