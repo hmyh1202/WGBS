@@ -1,0 +1,93 @@
+#Description: Quality control by using fastqc
+#Date: 2017/02/04
+
+Bin=$(dir $(abspath $(firstword $(MAKEFILE_LIST))))/
+include $(Bin)/software.txt
+Dir=$(Indir)
+Trim_dir=$(Dir)/Clean_Data
+Clean_fq1=$(Trim_dir)/$(Sample)_P_fiter_R1.fq.gz
+Clean_fq2=$(Trim_dir)/$(Sample)_P_fiter_R2.fq.gz
+
+FastQC_Fq1:
+	cd $(Trim_dir)
+	[ -s $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc.zip ] && rm $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc.zip || echo dir clean
+	[ -s $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc ] && rm -rf $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc || echo dir clean
+	$(FastQC) $(Clean_fq1)
+	unzip $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc.zip -d $(Trim_dir)
+	convert -append \
+		$(Trim_dir)/$(Sample)_P_fiter_R1_fastqc/Images/per_base_quality.png \
+		$(Trim_dir)/$(Sample)_P_fiter_R1_fastqc/Images/per_sequence_gc_content.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic1.png
+	convert -append \
+		$(Trim_dir)/$(Sample)_P_fiter_R1_fastqc/Images/per_base_sequence_content.png \
+		$(Trim_dir)/$(Sample)_P_fiter_R1_fastqc/Images/per_base_n_content.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic2.png
+	convert -append \
+		$(Trim_dir)/$(Sample)_P_fiter_R1_fastqc/Images/sequence_length_distribution.png \
+		$(Trim_dir)/$(Sample)_P_fiter_R1_fastqc/Images/duplication_levels.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic3.png
+	convert +append $(Trim_dir)/$(Sample)_fiter_R1_pic1.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic2.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic1_2.png
+	convert +append $(Trim_dir)/$(Sample)_fiter_R1_pic1_2.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic3.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_QC.png
+	convert $(Trim_dir)/$(Sample)_fiter_R1_QC.png \
+		-background White -pointsize 80 \
+		-gravity center label:'$(Sample)' \
+		+swap \
+		-append \
+		-quality 92 \
+		$(Trim_dir)/$(Sample)_fiter_R1_FastQC.png
+	convert -quality 96 $(Trim_dir)/$(Sample)_fiter_R1_FastQC.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_FastQC.pdf
+	### rm
+	rm -r $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc
+	rm -r $(Trim_dir)/$(Sample)_P_fiter_R1_fastqc.zip
+	rm $(Trim_dir)/$(Sample)_fiter_R1_pic1.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic2.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic3.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_pic1_2.png \
+		$(Trim_dir)/$(Sample)_fiter_R1_QC.png
+
+FastQC_Fq2:
+	cd $(Trim_dir)
+	[ -s $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc.zip ] && rm $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc.zip || echo dir clean
+	[ -s $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc ] && rm -rf $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc || echo dir clean
+	$(FastQC) $(Clean_fq2)
+	unzip $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc.zip -d $(Trim_dir)
+	convert -append \
+		$(Trim_dir)/$(Sample)_P_fiter_R2_fastqc/Images/per_base_quality.png \
+		$(Trim_dir)/$(Sample)_P_fiter_R2_fastqc/Images/per_sequence_gc_content.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic1.png
+	convert -append \
+		$(Trim_dir)/$(Sample)_P_fiter_R2_fastqc/Images/per_base_sequence_content.png \
+		$(Trim_dir)/$(Sample)_P_fiter_R2_fastqc/Images/per_base_n_content.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic2.png
+	convert -append \
+		$(Trim_dir)/$(Sample)_P_fiter_R2_fastqc/Images/sequence_length_distribution.png \
+		$(Trim_dir)/$(Sample)_P_fiter_R2_fastqc/Images/duplication_levels.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic3.png
+	convert +append $(Trim_dir)/$(Sample)_fiter_R2_pic1.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic2.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic1_2.png
+	convert +append $(Trim_dir)/$(Sample)_fiter_R2_pic1_2.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic3.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_QC.png
+	convert $(Trim_dir)/$(Sample)_fiter_R2_QC.png \
+		-background White -pointsize 80 \
+		-gravity center label:'$(Sample)' \
+		+swap \
+		-append \
+		-quality 96 \
+		$(Trim_dir)/$(Sample)_fiter_R2_FastQC.png
+	convert -quality 96 $(Trim_dir)/$(Sample)_fiter_R2_FastQC.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_FastQC.pdf
+	### rm
+	rm -r $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc
+	rm -r $(Trim_dir)/$(Sample)_P_fiter_R2_fastqc.zip
+	rm $(Trim_dir)/$(Sample)_fiter_R2_pic1.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic2.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic3.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_pic1_2.png \
+		$(Trim_dir)/$(Sample)_fiter_R2_QC.png
